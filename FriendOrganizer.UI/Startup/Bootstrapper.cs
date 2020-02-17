@@ -17,6 +17,10 @@ namespace FriendOrganizer.UI.Startup
 
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
+            builder.RegisterType<NavigationViewModel>().As<INavigationViewModel>();
+            builder.RegisterType<FriendDetailViewModel>().As<IFriendDetailViewModel>();
+
+            builder.RegisterType<LookupDataService>().AsImplementedInterfaces();    // Register class for multiple interfaces
             builder.RegisterType<FriendDataService>().As<IFriendDataService>();     // Use FriendDataService whenever IFriendDataService is required
             builder.RegisterType<FriendOrganizerDbContext>().AsSelf();
 

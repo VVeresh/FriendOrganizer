@@ -40,11 +40,11 @@ namespace FriendOrganizer.UI.Data
         //    //yield return new Friend { FirstName = "Zarko", LastName = "Zaric" };
         //}
        
-        public async Task<List<Friend>> GetAllAsync()     
+        public async Task<Friend> GetByIdAsync(int friendId)       // Instead for Task<List<Friend>> we want to return a single friend
         {
             using(var ctx = _contextCreator())
             {
-                return await ctx.Friends.AsNoTracking().ToListAsync();      // It can be disposed before it return, so we shoul await method
+                return await ctx.Friends.AsNoTracking().SingleAsync(f => f.Id == friendId);      // It can be disposed before it return, so we shoul await method
 
                 //// TESTING ASYNC LOADING:
                 //var friends = await ctx.Friends.AsNoTracking().ToListAsync();
