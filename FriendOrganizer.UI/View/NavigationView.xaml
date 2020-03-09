@@ -9,8 +9,8 @@
     <Grid>
         <ListView ItemsSource="{Binding Friends}"                   
                   DisplayMemberPath="DisplayMember"
+                  SelectedItem="{Binding SelectedFriend, Mode=TwoWay}"
                   Grid.Column="0" />
         <!--"Grid.Colum="0" - Also defaule value that we dont need to specify; "TwoWay" - value is also writen back to viewModel whe item is changed "DisplayMemberPath" - property that we want to display-->
-        <!--SelectedItem="{Binding SelectedFriend, Mode=TwoWay}" - OBSOLITE-->
     </Grid>
 </UserControl>

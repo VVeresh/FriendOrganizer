@@ -13,6 +13,6 @@
             <ColumnDefinition Width="*"/>   <!--"*" is a default property, dont need to set it-->
         </Grid.ColumnDefinitions>
         <view:NavigationView DataContext="{Binding NavigationViewModel}"/>
-        <view:FriendDetailView Grid.Column="1" DataContext="{Binding FriendDataViewModel}"/>  
+        <view:FriendDetailView Grid.Column="1" DataContext="{Binding FriendDetailViewModel}"/>  
     </Grid>
 </Window>
