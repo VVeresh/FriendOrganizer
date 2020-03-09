@@ -52,5 +52,17 @@ namespace FriendOrganizer.UI.Data
                 //return friends;
             }
         }
+
+        public async Task SaveAsync(Friend friend)
+        {
+            // Call Func to ged DbContext via _contextCreator
+            using(var ctx = _contextCreator())
+            {
+                // First attach Friend to the Context so it is awere of this instance
+                ctx.Friends.Attach(friend);
+                ctx.Entry(friend).State = EntityState.Modified;     // Context is awere that this instance is changed
+                await ctx.SaveChangesAsync();
+            }
+        }
     }
 }
