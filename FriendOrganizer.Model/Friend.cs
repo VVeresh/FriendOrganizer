@@ -10,7 +10,7 @@ namespace FriendOrganizer.Model
         [Key]   // Not needed
         public int Id { get; set; }
 
-        [Required]
+        [Required]      // Data annotation
         [StringLength(50)]
         public string FirstName { get; set; }
 
@@ -18,6 +18,7 @@ namespace FriendOrganizer.Model
         public string LastName { get; set; }
 
         [StringLength(50)]
+        [EmailAddress]
         public string Email { get; set; }
     }
 }
