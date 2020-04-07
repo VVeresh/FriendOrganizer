@@ -2,15 +2,16 @@
 using System.Threading.Tasks;
 using FriendOrganizer.Model;
 
-namespace FriendOrganizer.UI.Data
+namespace FriendOrganizer.UI.Data.Repositories
 {
     /// <summary>
     /// Interface to be used in ViewModel
     /// </summary>
-    public interface IFriendDataService
+    public interface IFriendRepository
     {
         //IEnumerable<Friend> GetAll();
         Task<Friend> GetByIdAsync(int friendId);
-        Task SaveAsync(Friend friend);
+        Task SaveAsync(/*Friend friend*/);
+        bool HasChanges();
     }
 }
