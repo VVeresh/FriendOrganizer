@@ -18,6 +18,11 @@ namespace FriendOrganizer.UI.Data.Repositories
             _context = context;
         }
 
+        public void Add(Friend friend)
+        {
+            _context.Friends.Add(friend);
+        }
+
         /// <summary>
         /// Load data into View Model
         /// </summary>
@@ -58,6 +63,11 @@ namespace FriendOrganizer.UI.Data.Repositories
         public bool HasChanges()
         {
             return _context.ChangeTracker.HasChanges();
+        }
+
+        public void Remove(Friend model)
+        {
+            _context.Friends.Remove(model);
         }
 
         public async Task SaveAsync(/*Friend friend*/)
