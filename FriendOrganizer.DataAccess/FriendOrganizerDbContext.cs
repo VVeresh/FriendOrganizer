@@ -13,6 +13,8 @@ namespace FriendOrganizer.DataAccess
 
         public DbSet<Friend> Friends { get; set; }          // property used to get load and save friends to friends table
 
+        public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

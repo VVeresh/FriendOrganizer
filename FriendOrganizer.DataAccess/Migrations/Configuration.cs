@@ -22,6 +22,13 @@
                 new Friend { FirstName = "Era", LastName = "Eregic" },
                 new Friend { FirstName = "Sara", LastName = "Hujic" }
                 );
+
+            context.ProgrammingLanguages.AddOrUpdate(pl => pl.Name,
+                new ProgrammingLanguage { Name = "C#" },
+                new ProgrammingLanguage { Name = "TypeScript" },
+                new ProgrammingLanguage { Name = "F#" },
+                new ProgrammingLanguage { Name = "Swift" },
+                new ProgrammingLanguage { Name = "Python" });
         }
         // PM> Enable-Migration
         // PM> Add-Migrations InitialDatabase
