@@ -29,10 +29,14 @@
                 new ProgrammingLanguage { Name = "F#" },
                 new ProgrammingLanguage { Name = "Swift" },
                 new ProgrammingLanguage { Name = "Python" });
+
+            context.SaveChanges(); // so first friend can have id
+
+            context.FriendPhoneNumbers.AddOrUpdate(pn => pn.Number, new FriendPhoneNumber { Number = "+49 12345678", FriendId = context.Friends.First().Id });
         }
-        // PM> Enable-Migration
-        // PM> Add-Migrations InitialDatabase
-        // PM> Add-Migrations InitialDatabase -Force       - after changing model
+        // PM> Enable-Migrations
+        // PM> Add-Migration InitialDatabase
+        // PM> Add-Migration InitialDatabase -Force       - after changing model
         // PM> Update-Database
     }
 }
