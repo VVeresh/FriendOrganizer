@@ -182,14 +182,20 @@ namespace FriendOrganizer.UI.ViewModel
 
         protected override bool OnSaveCanExecute()
         {
-            return Friend != null 
-                && !Friend.HasErrors 
+            return Friend != null
+                && !Friend.HasErrors
                 && PhoneNumbers.All(pn => !pn.HasErrors)
                 && HasChanges;
         }
 
         protected override async void OnDeleteExecute()
         {
+            if (await _friendRepository.HasMeetingsAsync(Friend.Id))
+            {
+                _messageDialogService.ShowInfoDialog($"{Friend.FirstName} {Friend.LastName} can`t be deleted, as this friend is part of at least one meeting.");
+                return;
+            }
+
             var result = _messageDialogService.ShowOkCancelDialog($"Do you really want to delete the friend {Friend.FirstName} {Friend.LastName}", "Question");
             if (result == MessageDialogResult.OK)
             {
@@ -204,7 +210,7 @@ namespace FriendOrganizer.UI.ViewModel
                 //    });
             }
         }
-        
+
         private void OnAddPhoneNumberExecute()
         {
             var newNumber = new FriendPhoneNumberWrapper(new FriendPhoneNumber());
@@ -228,7 +234,7 @@ namespace FriendOrganizer.UI.ViewModel
         {
             return SelectedPhoneNumber != null;
         }
-        
+
         private Friend CreateNewFriend()
         {
             var friend = new Friend();
