@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data.Repositories
 {
-    public class FriendRepository : IFriendRepository
+    public class FriendRepository : GenericRepository<Friend, FriendOrganizerDbContext>, IFriendRepository
     {
         //private Func<FriendOrganizerDbContext> _contextCreator;
-        private FriendOrganizerDbContext _context;
+        //private FriendOrganizerDbContext _context;
 
-        public FriendRepository(FriendOrganizerDbContext context)        // Inject DbContext via Autofuc; need to register on container
+        public FriendRepository(FriendOrganizerDbContext context) : base(context)       // Inject DbContext via Autofuc; need to register on container
         {
-            _context = context;
+            //_context = context;
         }
 
-        public void Add(Friend friend)
-        {
-            _context.Friends.Add(friend);
-        }
+        //public void Add(Friend friend)
+        //{
+        //    _context.Friends.Add(friend);
+        //}
 
         /// <summary>
         /// Load data into View Model
@@ -46,9 +46,9 @@ namespace FriendOrganizer.UI.Data.Repositories
         //    //yield return new Friend { FirstName = "Zarko", LastName = "Zaric" };
         //}
 
-        public async Task<Friend> GetByIdAsync(int friendId)       // Instead for Task<List<Friend>> we want to return a single friend
+        public override async Task<Friend> GetByIdAsync(int friendId)       // Instead for Task<List<Friend>> we want to return a single friend
         {
-            return await _context.Friends
+            return await Context.Friends
                 .Include(f => f.PhoneNumbers)
                 .SingleAsync(f => f.Id == friendId);
             //using(var ctx = _contextCreator())
@@ -62,32 +62,32 @@ namespace FriendOrganizer.UI.Data.Repositories
             //}
         }
 
-        public bool HasChanges()
-        {
-            return _context.ChangeTracker.HasChanges();
-        }
+        //public bool HasChanges()
+        //{
+        //    return _context.ChangeTracker.HasChanges();
+        //}
 
-        public void Remove(Friend model)
-        {
-            _context.Friends.Remove(model);
-        }
+        //public void Remove(Friend model)
+        //{
+        //    _context.Friends.Remove(model);
+        //}
 
         public void RemovePhoneNumber(FriendPhoneNumber model)
         {
-            _context.FriendPhoneNumbers.Remove(model);
+            Context.FriendPhoneNumbers.Remove(model);
         }
 
-        public async Task SaveAsync(/*Friend friend*/)
-        {
-            // Call Func to ged DbContext via _contextCreator
-            //using(var ctx = _contextCreator())
-            //{
-            //    // First attach Friend to the Context so it is awere of this instance
-            //    ctx.Friends.Attach(friend);
-            //    ctx.Entry(friend).State = EntityState.Modified;     // Context is awere that this instance is changed
-            //    await ctx.SaveChangesAsync();
-            //}
-            await _context.SaveChangesAsync();
-        }
+        //public async Task SaveAsync(/*Friend friend*/)
+        //{
+        //    // Call Func to ged DbContext via _contextCreator
+        //    //using(var ctx = _contextCreator())
+        //    //{
+        //    //    // First attach Friend to the Context so it is awere of this instance
+        //    //    ctx.Friends.Attach(friend);
+        //    //    ctx.Entry(friend).State = EntityState.Modified;     // Context is awere that this instance is changed
+        //    //    await ctx.SaveChangesAsync();
+        //    //}
+        //    await _context.SaveChangesAsync();
+        //}
     }
 }
