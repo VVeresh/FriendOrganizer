@@ -2,6 +2,7 @@
 {
     using FriendOrganizer.Model;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -33,6 +34,19 @@
             context.SaveChanges(); // so first friend can have id
 
             context.FriendPhoneNumbers.AddOrUpdate(pn => pn.Number, new FriendPhoneNumber { Number = "+49 12345678", FriendId = context.Friends.First().Id });
+
+            context.Meetings.AddOrUpdate(m => m.Title,
+                new Meeting
+                {
+                    Title = "Playing Soni",
+                    DateFrom = new DateTime(2020,5,26),
+                    DateTo = new DateTime(2020,5,26),
+                    Friends = new List<Friend>
+                    {
+                        context.Friends.Single(f => f.FirstName == "Toma" && f.LastName == "Hujic"),
+                        context.Friends.Single(f => f.FirstName == "Uros" && f.LastName == "Meric")
+                    }
+                });
         }
         // PM> Enable-Migrations
         // PM> Add-Migration InitialDatabase

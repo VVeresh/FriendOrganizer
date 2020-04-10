@@ -29,11 +29,14 @@ namespace FriendOrganizer.UI.Startup
 
             builder.RegisterType<MainViewModel>().AsSelf();
             builder.RegisterType<NavigationViewModel>().As<INavigationViewModel>();
-            builder.RegisterType<FriendDetailViewModel>().As<IFriendDetailViewModel>();
+            builder.RegisterType<FriendDetailViewModel>().Keyed<IDetailViewModel>(nameof(FriendDetailViewModel));
+            builder.RegisterType<MeetingDetailViewModel>().Keyed<IDetailViewModel>(nameof(MeetingDetailViewModel));
+
 
             builder.RegisterType<LookupDataService>().AsImplementedInterfaces();    // Register class for multiple interfaces
             builder.RegisterType<FriendRepository>().As<IFriendRepository>();     // Use FriendDataService whenever IFriendDataService is required
-            
+            builder.RegisterType<MeetingRepository>().As<IMeetingRepository>();
+
             return builder.Build();
         }
     }
