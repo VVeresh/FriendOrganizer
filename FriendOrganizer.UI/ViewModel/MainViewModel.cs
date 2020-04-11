@@ -116,7 +116,16 @@ namespace FriendOrganizer.UI.ViewModel
             if (detailViewModel == null)
             {
                 detailViewModel = _detailViewModelCreator[args.ViewModelName];
-                await detailViewModel.LoadAsync(args.Id);
+                try
+                {
+                    await detailViewModel.LoadAsync(args.Id);
+                }
+                catch
+                {
+                    _messageDialogService.ShowInfoDialog("Could not load the entity maybe it was deleted in the meantime by another user. The navigation is refreshed for you.");
+                    await NavigationViewModel.LoadAsync();
+                    return;
+                }
                 DetailViewModels.Add(detailViewModel);
             }
 
@@ -142,7 +151,7 @@ namespace FriendOrganizer.UI.ViewModel
             //}
 
             SelectedDetailViewModel = detailViewModel;
-            
+
         }
 
         private int nextNewItemId = 0;
@@ -150,8 +159,11 @@ namespace FriendOrganizer.UI.ViewModel
         private void OnCreateNewDetailExecute(Type viewModelType)
         {
             OnOpenDetailView(
-                new OpenDetailViewEventArgs { Id = nextNewItemId--,
-                    ViewModelName = viewModelType.Name });
+                new OpenDetailViewEventArgs
+                {
+                    Id = nextNewItemId--,
+                    ViewModelName = viewModelType.Name
+                });
         }
 
         private void OnOpenSingleDetailViewExecute(Type viewModelType)
@@ -170,7 +182,7 @@ namespace FriendOrganizer.UI.ViewModel
 
             //SelectedDetailViewModel = null;
         }
-            
+
         private void AfterDetailClosed(AfterDetailClosedEventArgs args)
         {
             RemoveDetailViewModel(args.Id, args.ViewModelName);
