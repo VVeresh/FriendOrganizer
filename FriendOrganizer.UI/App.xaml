@@ -6,6 +6,7 @@
              DispatcherUnhandledException="Application_DispatcherUnhandledException">
     <!-- Event handler for DispatcherUnhandledExceptions event -->
     <Application.Resources>
+        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"/>
         <Style TargetType="TextBox">
             <!-- Implicit style that apply to all textbox in app becouse we didnt set x:Key="" attribute -->
 
