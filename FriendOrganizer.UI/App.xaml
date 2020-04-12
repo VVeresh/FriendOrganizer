@@ -2,57 +2,89 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:FriendOrganizer.UI"
+             xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+             
              Startup="Application_Startup"
              DispatcherUnhandledException="Application_DispatcherUnhandledException">
     <!-- Event handler for DispatcherUnhandledExceptions event -->
     <Application.Resources>
-        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"/>
-        <Style TargetType="TextBox">
-            <!-- Implicit style that apply to all textbox in app becouse we didnt set x:Key="" attribute -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <!-- Accent and AppTheme setting -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
+                <ResourceDictionary>
+                    
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="FontSize" Value="16"/>
+                    </Style>
+                    
+                    <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Setter Property="FontSize" Value="20"/>
+                    </Style>
 
-            <Setter Property="Validation.ErrorTemplate">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <StackPanel>
-                            <!--Stacks elements verticaly-->
-                            <AdornedElementPlaceholder x:Name="placeholder"/>
-                            <!--Placeholder for textbox-->
-                            <TextBlock FontSize="12" Foreground="Red" Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
-                        </StackPanel>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+                    <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                        <Setter Property="Foreground" Value="#CCCCCC"/>
+                    </Style>
 
-            <Style.Triggers>
-                <!--Set something if prop has specific value-->
+                    <Style TargetType="toolkit:DateTimePicker">
+                        <Setter Property="Foreground" Value="White"/>
+                    </Style>
+                    
+                    <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"/>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                        <!-- Implicit style that apply to all textbox in app becouse we didnt set x:Key="" attribute -->
+                        <Setter Property="FontSize" Value="20"/>
+                        <Setter Property="Validation.ErrorTemplate">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <StackPanel>
+                                        <!--Stacks elements verticaly-->
+                                        <AdornedElementPlaceholder x:Name="placeholder"/>
+                                        <!--Placeholder for textbox-->
+                                        <TextBlock FontSize="12" Foreground="White" Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
+                                    </StackPanel>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
 
-                <Trigger Property="Validation.HasError" Value="True">
-                    <!--Define setter that will set our textbox background prop-->
+                        <Style.Triggers>
+                            <!--Set something if prop has specific value-->
 
-                    <Setter Property="Background" Value="Red" />
+                            <Trigger Property="Validation.HasError" Value="True">
+                                <!--Define setter that will set our textbox background prop-->
 
-                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                                <Setter Property="Background" Value="DarkRed" />
 
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
 
-        <Style x:Key="DataGridColumnStyle" TargetType="TextBlock">
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError" Value="True">
-                    <Setter Property="Background" Value="Red" />
-                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
 
-        <Style x:Key="DataGridEditingColumnStyle" TargetType="TextBox">
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError" Value="True">
-                    <Setter Property="Background" Value="Red" />
-                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+                    <Style x:Key="DataGridColumnStyle" TargetType="TextBlock">
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="True">
+                                <Setter Property="Background" Value="DarkRed" />
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+
+                    <Style x:Key="DataGridEditingColumnStyle" TargetType="TextBox">
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="True">
+                                <Setter Property="Background" Value="DarkRed" />
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
